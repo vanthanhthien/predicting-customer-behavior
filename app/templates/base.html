@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ứng dụng Dự đoán Mua hàng</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="navbar-brand">Dự đoán Mua hàng</h1>
+            <ul class="navbar-nav">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/predict-view">Biểu mẫu dự đoán</a></li>
+                <!-- Đã xóa mục Tài liệu API -->
+            </ul>
+        </div>
+    </nav>
+
+    {% block content %}
+    <div class="container">
+        <div class="welcome">
+            <h1>Dự đoán khả năng khách hàng mua hàng</h1>
+            <p>Ứng dụng này dự đoán khả năng một khách hàng sẽ mua hàng dựa trên hành vi và đặc điểm của họ.</p>
+            
+            <div class="options">
+                <a href="/predict-view" class="btn btn-primary">Giao diện web</a>
+                <!-- Đã xóa nút Tài liệu API -->
+            </div>
+            
+            <div class="api-example">
+                <h2>Ví dụ sử dụng API</h2>
+                <pre>
+POST /predict
+{
+  "age": 35,
+  "time_spent_on_site": 5.2,
+  "pages_visited": 8,
+  "previous_purchases": 2,
+  "cart_value": 75.5,
+  "is_returning_customer": 1,
+  "days_since_last_visit": 7
+}
+                </pre>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <script src="{{ url_for('static', path='/js/script.js') }}"></script>
+</body>
+</html>

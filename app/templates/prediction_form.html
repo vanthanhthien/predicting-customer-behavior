@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Dự đoán Mua hàng</h1>
+    
+    {% if result %}
+    <div class="result {% if result.likely_to_purchase %}positive{% else %}negative{% endif %}">
+        <h2>Kết quả dự đoán</h2>
+        <p>Xác suất mua hàng: <strong>{{ "%.2f"|format(result.purchase_probability * 100) }}%</strong></p>
+        <p>Khách hàng <strong>{{ "có khả năng" if result.likely_to_purchase else "không có khả năng" }}</strong> mua hàng.</p>
+    </div>
+    {% endif %}
+    
+    <form method="post">
+        <div class="form-group">
+            <label for="age">Độ tuổi khách hàng:</label>
+            <input type="number" step="0.01" id="age" name="age" value="{{ form_data.age if form_data else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="time_spent_on_site">Thời gian ở lại trang (phút):</label>
+            <input type="number" step="0.01" id="time_spent_on_site" name="time_spent_on_site" value="{{ form_data.time_spent_on_site if form_data else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="pages_visited">Số trang đã xem:</label>
+            <input type="number" id="pages_visited" name="pages_visited" value="{{ form_data.pages_visited if form_data else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="previous_purchases">Lượt mua trước đó:</label>
+            <input type="number" id="previous_purchases" name="previous_purchases" value="{{ form_data.previous_purchases if form_data else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="cart_value">Giá trị giỏ hàng (USD):</label>
+            <input type="number" step="0.01" id="cart_value" name="cart_value" value="{{ form_data.cart_value if form_data else '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="is_returning_customer">Khách hàng quay lại:</label>
+            <select id="is_returning_customer" name="is_returning_customer" required>
+                <option value="1" {% if form_data and form_data.is_returning_customer == 1 %}selected{% endif %}>Có</option>
+                <option value="0" {% if form_data and form_data.is_returning_customer == 0 %}selected{% endif %}>Không</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="days_since_last_visit">Số ngày kể từ lần truy cập trước:</label>
+            <input type="number" step="0.01" id="days_since_last_visit" name="days_since_last_visit" value="{{ form_data.days_since_last_visit if form_data else '' }}" required>
+        </div>
+        
+        <button type="submit">Dự đoán</button>
+    </form>
+</div>
+{% endblock %}
